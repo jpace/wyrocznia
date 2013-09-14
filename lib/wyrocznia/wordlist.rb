@@ -2,34 +2,30 @@
 # -*- ruby -*-
 
 require 'wyrocznia/matchlist'
-require 'wyrocznia/utils'
 
 class Word
   attr_reader :word
   attr_reader :definition
-  attr_reader :ospd
+  attr_reader :dictionary
 
-  def initialize word, defn, ospd
+  def initialize word, defn, dictionary
     @word = word
     @definition = defn
-    @ospd = ospd
+    @dictionary = dictionary
   end
 end
 
+# accepts a text file of the form:
+# word: definition {dictionary}
 class WordList
   LETTERS = ('a' .. 'z').to_a
 
   def initialize fname, nletters
     @nletters = nletters
-    re = Regexp.new('^(' + ('\w' * nletters) + '):\s*(.*?)(?:\{(OSPD\d)\})?\s*$')
-
-    puts "fname: #{fname}"
-    resdir = Wyrocznia::Utils.resource_directory
-    fullname = resdir + fname
-    puts "fullname: #{fullname}"
-
+    re = Regexp.new('^(' + ('\w' * nletters) + '):\s*(.*?)(?:\{(.*)\})?\s*$')
+    
     @words = Hash.new
-    IO.readlines(fullname).each do |line|
+    IO.readlines(fname).each do |line|
       line.chomp!
       next unless md = re.match(line)
       word = Word.new md[1].downcase, md[2].strip, md[3]
@@ -77,7 +73,7 @@ class WordList
       end
 
       words = matching pat
-      words.run_test pat
+      return false unless words.run_test pat
     end
     true
   end
