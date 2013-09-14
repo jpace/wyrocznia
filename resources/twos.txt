@@ -1,0 +1,10 @@
+aa: lava
+ab: abdominal muscle
+ad: advertisement
+ae: one
+ag: agriculture
+ah: statement of understanding
+al: Indian tree
+
+ba
+be

@@ -45,11 +45,11 @@ class MatchList < Array
     puts "score   : #{score}".color('#fafa33')
   end
 
-  def print_word word, color, defn = false
+  def print_word word, color, showdef = false
     msg = "    "
     msg << word.color(color)
-    if defn
-      msg << " " << @wordlist.definition(word)
+    if showdef && (defn = @wordlist.definition(word))
+      msg << " " << defn
     end
     puts msg
   end

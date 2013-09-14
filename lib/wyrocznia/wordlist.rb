@@ -22,14 +22,16 @@ class WordList
 
   def initialize fname, nletters
     @nletters = nletters
-    re = Regexp.new('^(' + ('\w' * nletters) + '):\s*(.*?)(?:\{(.*)\})?\s*$')
+    re = Regexp.new('^(' + ('\w' * nletters) + ')(?:\:\s*(.*?)(?:\{(.*)\})?\s*$)?')
     
     @words = Hash.new
     IO.readlines(fname).each do |line|
       line.chomp!
       next unless md = re.match(line)
-      word = Word.new md[1].downcase, md[2].strip, md[3]
-      @words[word.word] = word
+      word = md[1].downcase 
+      defn = md[2] && md[2].strip
+      dict = md[3]
+      @words[word] = Word.new word, defn, dict
     end
   end
 
