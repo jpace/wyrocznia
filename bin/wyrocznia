@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+#
+#  Created on 2013-09-12.
+#  Copyright (c) 2013. All rights reserved.
+
+require 'rubygems'
+
+fdirname = File.expand_path(File.dirname(__FILE__) + '/../lib')
+unless $:.include?(fdirname) || $:.include?(File.expand_path(fdirname))
+  $:.unshift(fdirname)
+end
+
+require 'wyrocznia'
+require "wyrocznia/app"
+
+Wyrocznia::App::Runner.new STDOUT, ARGV
