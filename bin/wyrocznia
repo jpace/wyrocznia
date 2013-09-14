@@ -13,4 +13,4 @@ end
 require 'wyrocznia'
 require "wyrocznia/app"
 
-Wyrocznia::App::Runner.new STDOUT, ARGV
+Wyrocznia::App.new STDOUT, ARGV

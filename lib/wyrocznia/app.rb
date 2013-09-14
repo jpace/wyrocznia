@@ -4,15 +4,24 @@
 # integrate with http://www.thefreedictionary.com/rankle for word lists
 
 require 'rainbow'
-$:.unshift File.dirname(__FILE__)
 require 'wyrocznia/wordlist'
+require 'wyrocznia/utils'
 
-nletters = ARGV.shift.to_i.nonzero? || 2
-ndots = ARGV.shift.to_i.nonzero? || (1 + (nletters == 3 ? rand(nletters - 1) : 0))
-puts "ndots: #{ndots}"
+module Wyrocznia
+  class App
+    def initialize out, args
+      nletters = args.shift.to_i.nonzero? || 2
+      ndots = args.shift.to_i.nonzero? || (1 + (nletters == 3 ? rand(nletters - 1) : 0))
 
-wordlist = nletters == 3 ? ThreeLetterWordList.new : TwoLetterWordList.new
+      fname = nletters == 2 ? "twos.txt" : "threes.txt"
+      resdir = Wyrocznia::Utils.resource_directory
+      fullname = resdir + fname
 
-loop do
-  break unless wordlist.run_test(ndots)
+      wordlist = WordList.new fullname, nletters
+
+      puts "Press ctrl-D to end ..."
+      while wordlist.run_test(ndots)
+      end
+    end
+  end
 end

@@ -88,8 +88,10 @@ class MatchList < Array
 
     printf "matching: '#{pat.source}': ".color('#33fafa')
 
-    ans = gets.chomp
-    return false if ans == 'quit'
+    ans = gets
+    return false unless ans
+    ans.chomp!
+    return false if ans.chomp == 'quit'
 
     answords = ans.split(%r{\s*[\s,]+\s*}).sort
     puts "answords: #{answords}"
@@ -97,5 +99,6 @@ class MatchList < Array
     show_each pat, answords
 
     puts
+    true
   end
 end
