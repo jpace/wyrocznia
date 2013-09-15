@@ -15,10 +15,6 @@ Rake::TestTask.new('test') do |t|
   t.verbose = true
 end
 
-task :build_fixtures do
-  Resources.instance.generate
-end
-
 desc "generate man page"
 task :generate_manpage do 
   sh "ronn -r --pipe README.md > man/wyrocznia.1"
@@ -33,7 +29,7 @@ spec = Gem::Specification.new do |s|
   s.platform           = Gem::Platform::RUBY
   s.summary            = "A program to test knowledge of words."
   s.description        = "A program to test using word lists, matching possible letter combinations."
-  s.files              = FileList["{bin,lib,man}/**/*"].to_a
+  s.files              = FileList["{bin,lib,man,resources}/**/*"].to_a
   s.require_path       = "lib"
   s.test_files         = FileList["{test}/**/*test.rb"].to_a
   s.has_rdoc           = false
