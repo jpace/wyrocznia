@@ -18,10 +18,10 @@ module Wyrocznia
       fullname = resdir + fname
 
       wordlist = WordList.new fullname, nletters
+      tester = WordListTest.new wordlist, ndots
 
       puts "Press ctrl-D to end ..."
-      while wordlist.run_test(ndots)
-      end
+      nil while tester.run_test
     end
   end
 end
