@@ -22,7 +22,7 @@ class WordList
 
   def initialize fname, nletters
     @nletters = nletters
-    re = Regexp.new('^(' + ('\w' * nletters) + ')(?:\:\s*(.*?)(?:\{(.*)\})?\s*$)?')
+    re = Regexp.new('^(' + ('\w' * nletters) + ')\b(?:\:\s*(.*?)(?:\{(.*)\})?\s*$)?')
     
     @words = Hash.new
     IO.readlines(fname).each do |line|
@@ -48,7 +48,7 @@ class WordList
   end
 
   def pattern ndots = @nletters - 1
-    loop do
+    100.times do
       pat = Array.new
       (@nletters).times { pat << random_letter }
       while pat.count { |x| x == '.' } < ndots
@@ -58,6 +58,7 @@ class WordList
       re = Regexp.new pat.join('')
       return re unless matching(re).empty?
     end
+    raise "could not find pattern"
   end
 end
 
